@@ -1,7 +1,8 @@
 "use strict"
 
 const mongoose = require("mongoose")
-const connectString = "mongodb+srv://caoky2003xx:TYhU2PjJ7CA5HNHJ@rescuewheels.teym0xj.mongodb.net/?retryWrites=true&w=majority&appName=RescueWheels"
+const connectString = "mongodb+srv://caoky2003xx:ii7OJt02QTZ92i7Z@rescuewheels.d0n9rgt.mongodb.net/?retryWrites=true&w=majority&appName=RescueWheels"
+const { countConnect } = require("../helpers/check.connect")
 
 class Database {
     constructor() {
@@ -16,8 +17,13 @@ class Database {
             })
         }
 
-        mongoose.connect(connectString)
-            .then(_ => console.log("Mongoose Successfully Connected!"))
+        mongoose.connect(connectString, {
+            maxPoolSize: 50
+        })
+            .then(_ => {
+                console.log("Mongoose Successfully Connected!")
+                countConnect()
+            })
             .catch(err => console.log("Error Connected"))
     }
 
