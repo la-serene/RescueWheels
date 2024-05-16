@@ -1,7 +1,7 @@
 "use strict"
 
 const mongoose = require("mongoose")
-const connectString = "mongodb+srv://caoky2003xx:ii7OJt02QTZ92i7Z@rescuewheels.d0n9rgt.mongodb.net/?retryWrites=true&w=majority&appName=RescueWheels"
+const connectString = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@rescuewheels.d0n9rgt.mongodb.net/?retryWrites=true&w=majority&appName=RescueWheels`
 const { countConnect } = require("../helpers/check.connect")
 
 class Database {
