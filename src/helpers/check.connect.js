@@ -1,9 +1,10 @@
 "use strict"
 
-const mongoose = require("mongoose")
-const os = require("os");
+import mongoose from "mongoose"
+import os from "os"
+
 const _SECONDS = 5000
-const countConnect = () => {
+export const countConnect = () => {
     const numConnection = mongoose.connections.length
     console.log(`Number of connection: ${numConnection}`)
 }
@@ -19,8 +20,4 @@ const checkOverload = () => {
             console.log("Connection overload detected")
         }
     }, _SECONDS)
-}
-
-module.exports = {
-    countConnect
 }

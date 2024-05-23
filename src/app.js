@@ -1,8 +1,8 @@
-require("dotenv").config()
-const express = require("express")
-const morgan = require("morgan")
-const { default: helmet } = require("helmet");
-const compression = require("compression");
+import express from "express"
+import morgan from "morgan"
+import helmet from "helmet"
+import route from "./routes/route.js"
+import compression from "compression"
 const app = express()
 
 // init middlewares
@@ -11,12 +11,11 @@ app.use(helmet())
 app.use(compression())
 
 // init dbx
-require("./dbs/init.mongodb")
+import db from "./dbs/init.mongodb.js"
 
 // init routes
-
-
+route(app)
 
 // handling err
 
-module.exports = app
+export default app

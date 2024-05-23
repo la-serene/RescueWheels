@@ -1,8 +1,8 @@
 "use strict"
 
-const mongoose = require("mongoose")
+import mongoose from "mongoose"
 const connectString = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@rescuewheels.d0n9rgt.mongodb.net/?retryWrites=true&w=majority&appName=RescueWheels`
-const { countConnect } = require("../helpers/check.connect")
+import { countConnect } from "../helpers/check.connect.js"
 
 class Database {
     constructor() {
@@ -37,4 +37,4 @@ class Database {
 }
 
 const instanceMongodb = Database.getInstance()
-module.exports = instanceMongodb
+export default instanceMongodb
