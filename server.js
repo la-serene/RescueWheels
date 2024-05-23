@@ -1,6 +1,6 @@
 import app from "./src/app.js"
 
-const PORT = 3055
+const PORT = process.env.PORT
 
 const server = app.listen(PORT, () => {
     console.log(`Server starts at http://localhost:${PORT}`)

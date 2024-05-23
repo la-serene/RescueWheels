@@ -36,6 +36,11 @@ const userSchema = new mongoose.Schema({
     cover: {
         type: String
     },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        expires: 3600,
+    }
 }, {
     methods: {}
 })
