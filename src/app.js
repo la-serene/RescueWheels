@@ -10,10 +10,12 @@ app.use(morgan("dev"))
 app.use(helmet())
 app.use(compression())
 
-// init db
+// init dbx
 require("./dbs/init.mongodb")
 
 // init routes
+
+
 
 // handling err
 
