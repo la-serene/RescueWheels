@@ -24,7 +24,7 @@ class Database {
                 console.log("Mongoose Successfully Connected!")
                 countConnect()
             })
-            .catch(err => console.log("Error Connected"))
+            .catch(err => console.log(err))
     }
 
     static getInstance() {
