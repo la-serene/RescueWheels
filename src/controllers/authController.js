@@ -1,6 +1,7 @@
 import User from "../models/UserAccount.js"
 import Token from "../models/Token.js"
 import bcrypt from "bcrypt"
+import crypto from "crypto"
 import jwt from 'jsonwebtoken'
 import { sendMail } from "../helpers/sendMail.service.js";
 
@@ -68,7 +69,6 @@ export const sendResetPasswordMail = async (req, res) => {
             token: hash,
             createdAt: Date.now(),
         }).save()
-
 
         const subject = "Reset Password"
         const text = `Click this link to reset your password: http://localhost:3000/reset-password/${token}`
