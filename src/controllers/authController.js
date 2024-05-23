@@ -15,7 +15,6 @@ export const signUp = async (req, res) => {
             password: await bcrypt.hash(password, salt),
             ...rest
         })
-        console.log(user)
         await user.save()
 
         res.status(200).json({
