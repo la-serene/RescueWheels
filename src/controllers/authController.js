@@ -1,6 +1,7 @@
 import User from "../models/UserAccount.js"
 import Token from "../models/Token.js"
 import bcrypt from "bcrypt"
+import crypto from "crypto"
 import jwt from 'jsonwebtoken'
 import { sendMail } from "../helpers/sendMail.service.js";
 
@@ -69,12 +70,58 @@ export const sendResetPasswordMail = async (req, res) => {
             createdAt: Date.now(),
         }).save()
 
-
         const subject = "Reset Password"
-        const text = `Click this link to reset your password: http://localhost:3000/reset-password/${token}`
+        const text = `Click this link to reset your password: http://localhost:3000/resetPassword?id=${user._id}&token=${token}`
         await sendMail(email, subject, text)
         res.status(200).json({
             message: "Reset password link has been sent to your email."
         })
     }
+}
+
+export const validateResetToken = async (req, res) => {
+    const userId = req.query.id
+    const token = req.query.token
+
+    const resetToken = Token.findOne({ userId: userId })
+    if (!resetToken) {
+        res.status(400).json({
+            message: "Invalid reset token.",
+            isToken: false
+        })
+    }
+
+    const isMatch = await bcrypt.compare(token, resetToken.token)
+    if (isMatch) {
+        res.status(200).json({
+            message: "Valid reset token.",
+            userId: userId,
+            isToken: true
+        })
+    } else {
+        res.status(400).json({
+            message: "Invalid reset token.",
+            isToken: false
+        })
+    }
+}
+
+export const resetPassword = async (req, res) => {
+    const userId = req.params.userId
+    const password = req.body.password
+
+    const user = await User.findById(userId).exec()
+    if (user) {
+        const salt = 10
+        user.password = await bcrypt.hash(password, salt)
+        await user.save()
+
+        res.status(200).json({
+            message: "Successfully reset password"
+        })
+    }
+
+    res.status(400).json({
+        message: "Undone"
+    })
 }
