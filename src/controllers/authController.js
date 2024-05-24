@@ -3,7 +3,7 @@ import Token from "../models/Token.js"
 import bcrypt from "bcrypt"
 import crypto from "crypto"
 import jwt from 'jsonwebtoken'
-import { sendMail } from "../helpers/send.mail.js";
+import { sendMail } from "../services/send.mail.js";
 
 export const signUp = async (req, res) => {
     const { email, password, ...rest } = req.body
@@ -34,11 +34,11 @@ export const signIn = async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, user.password)
     if (isMatch) {
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '720h' });
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '720h' });
         res.status(200).json({
             message: "Successfully sign in!",
             token: token,
-            userId: user._id
+            id: user._id
         })
     } else {
         res.status(400).json({
@@ -56,7 +56,7 @@ export const sendResetPasswordMail = async (req, res) => {
             message: "User account not found."
         })
     } else {
-        let token = await Token.findOne({ userId: user._id })
+        let token = await Token.findOne({ id: user._id })
         if (token) {
             await token.deleteOne()
         }
@@ -65,7 +65,7 @@ export const sendResetPasswordMail = async (req, res) => {
         token = crypto.randomBytes(32).toString("hex")
         const hash = await bcrypt.hash(token, Number(salt))
         await new Token({
-            userId: user._id,
+            id: user._id,
             token: hash,
             createdAt: Date.now(),
         }).save()
@@ -80,10 +80,10 @@ export const sendResetPasswordMail = async (req, res) => {
 }
 
 export const validateResetToken = async (req, res) => {
-    const userId = req.query.id
+    const id = req.query.id
     const token = req.query.token
 
-    const resetToken = Token.findOne({ userId: userId })
+    const resetToken = Token.findOne({ id: id })
     if (!resetToken) {
         res.status(400).json({
             message: "Invalid reset token.",
@@ -95,7 +95,7 @@ export const validateResetToken = async (req, res) => {
     if (isMatch) {
         res.status(200).json({
             message: "Valid reset token.",
-            userId: userId,
+            id: id,
             isToken: true
         })
     } else {
@@ -107,10 +107,10 @@ export const validateResetToken = async (req, res) => {
 }
 
 export const resetPassword = async (req, res) => {
-    const userId = req.params.userId
+    const id = req.params.id
     const password = req.body.password
 
-    const user = await User.findById(userId).exec()
+    const user = await User.findById(id).exec()
     if (user) {
         const salt = 10
         user.password = await bcrypt.hash(password, salt)
