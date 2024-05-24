@@ -1,17 +1,21 @@
-import Request from "../models/Request.js"
+import PendingService from "../models/PendingService.js";
 
-export const createRequest = async (req, res) => {
-    const userId = req.params.userId
-    const { latitude, longitude } = req.body.location
-
-    await new Request({
-        userId: userId,
-        location: {
-            latitude: latitude,
-            longitude: longitude }
-    }).save()
+export const approveService = async (req, res) => {
+    const pendingServiceId = req.params
+    const pendingService = await PendingService.findOne({_id: pendingServiceId}).exec()
+    await pendingService.createService()
+    pendingService.deleteOne().exec()
 
     res.status(200).json({
-        message: "Request created"
+        message: "Successfully approved service."
+    })
+}
+
+export const rejectService = async (req, res) => {
+    const pendingServiceId = req.params
+    await PendingService.deleteOne({ _id: pendingServiceId }).exec()
+
+    res.status(200).json({
+        message: "Successfully rejected pending service."
     })
 }

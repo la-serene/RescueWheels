@@ -1,12 +1,14 @@
 import express from 'express'
 import multer from 'multer'
 import {
-    createRequest
+    approveService,
+    rejectService,
 } from '../controllers/adminController.js'
 
 const router = express.Router()
 const upload = multer()
 
-router.post("/request/:userId", createRequest)
+router.post("/approveService/:pendingServiceId", approveService)
+router.post("/rejectService/:pendingServiceId", rejectService)
 
 export default router
