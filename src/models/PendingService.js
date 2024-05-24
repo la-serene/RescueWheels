@@ -9,6 +9,7 @@ const pendingServiceSchema = new mongoose.Schema({
     },
     to: {
         type: mongoose.Schema.Types.ObjectId,
+        ref: "Service"
     },
     name: {
         type: String,
