@@ -1,5 +1,5 @@
-import Service from "../models/Service.js";
-import PendingService from "../models/PendingService.js";
+import Service from "../models/Service.js"
+import PendingService from "../models/PendingService.js"
 
 export const submitService = async (req, res) => {
     const providerId = req.params.providerId

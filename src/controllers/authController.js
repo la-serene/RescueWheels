@@ -3,7 +3,7 @@ import Token from "../models/Token.js"
 import bcrypt from "bcrypt"
 import crypto from "crypto"
 import jwt from 'jsonwebtoken'
-import { sendMail } from "../services/send.mail.js";
+import { sendMail } from "../services/send.mail.js"
 
 export const signUp = async (req, res) => {
     const { email, password, ...rest } = req.body
@@ -34,7 +34,7 @@ export const signIn = async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, user.password)
     if (isMatch) {
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '720h' });
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '720h' })
         res.status(200).json({
             message: "Successfully sign in!",
             token: token,

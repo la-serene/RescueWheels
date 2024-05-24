@@ -1,4 +1,4 @@
-import Request from "../models/Request.js";
+import Request from "../models/Request.js"
 
 export const createRequest = async (req, res) => {
     const userId = req.params.userId

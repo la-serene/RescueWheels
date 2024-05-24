@@ -9,7 +9,7 @@ const locationSchema = new mongoose.Schema({
         type: Number,
         required: true,
     }
-}, {_id: false});
+}, {_id: false})
 
 const requestSchema = new mongoose.Schema({
     from: {
