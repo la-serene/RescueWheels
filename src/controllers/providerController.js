@@ -19,7 +19,7 @@ export const submitService = async (req, res) => {
 
 export const getServiceByQuantity = async (req, res) => {
     const quantity = req.params.quantity
-    const services = await Service.find().limit(quantity)
+    const services = await Service.find().limit(quantity).exec()
 
     res.status(200).json({
         services: services,
@@ -47,7 +47,7 @@ export const updateService = async (req, res) => {
 
 export const deleteService = async (req, res) => {
     const serviceId = req.params.serviceId
-    await Service.deleteOne({ _id: serviceId })
+    await Service.deleteOne({ _id: serviceId }).exec()
 
     res.status(200).json({
         message: "Service deleted."
