@@ -11,14 +11,9 @@ const feedbackSchema = new mongoose.Schema({
         required: true,
         ref: ["User", "Provider"]
     },
-    content: {
+    description: {
         type: String,
         required: true,
-    },
-    type: {
-        type: String,
-        required: true,
-        enum: ["feedback", "report"]
     },
     createdAt: {
         type: Date,
