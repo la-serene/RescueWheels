@@ -1,10 +1,9 @@
 import User from "../models/UserAccount.js"
 import Token from "../models/Token.js"
-import Request from "../models/Request.js"
 import bcrypt from "bcrypt"
 import crypto from "crypto"
 import jwt from 'jsonwebtoken'
-import { sendMail } from "../helpers/sendMail.service.js";
+import { sendMail } from "../helpers/send.mail.js";
 
 export const signUp = async (req, res) => {
     const { email, password, ...rest } = req.body
@@ -35,7 +34,7 @@ export const signIn = async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, user.password)
     if (isMatch) {
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET_KEY, { expiresIn: '720h' });
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '720h' });
         res.status(200).json({
             message: "Successfully sign in!",
             token: token,
@@ -125,9 +124,4 @@ export const resetPassword = async (req, res) => {
     res.status(400).json({
         message: "Undone"
     })
-}
-
-export const createRequest = async (req, res) => {
-    const userId = req.params.userId
-
 }
