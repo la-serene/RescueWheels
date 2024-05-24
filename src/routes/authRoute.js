@@ -5,7 +5,8 @@ import {
     signIn,
     sendResetPasswordMail,
     validateResetToken,
-    resetPassword
+    resetPassword,
+    createRequest,
 } from '../controllers/authController.js'
 
 const router = express.Router()
@@ -16,5 +17,6 @@ router.post("/signin", signIn)
 router.post("/sendResetPasswordMail", sendResetPasswordMail)
 router.get("/resetPassword", validateResetToken)
 router.post("/resetPassword/:userId", resetPassword)
+router.post("/request/:userid", createRequest)
 
 export default router

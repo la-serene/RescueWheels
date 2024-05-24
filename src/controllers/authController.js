@@ -1,5 +1,6 @@
 import User from "../models/UserAccount.js"
 import Token from "../models/Token.js"
+import Request from "../models/Request.js"
 import bcrypt from "bcrypt"
 import crypto from "crypto"
 import jwt from 'jsonwebtoken'
@@ -124,4 +125,9 @@ export const resetPassword = async (req, res) => {
     res.status(400).json({
         message: "Undone"
     })
+}
+
+export const createRequest = async (req, res) => {
+    const userId = req.params.userId
+
 }
