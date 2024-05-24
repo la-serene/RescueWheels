@@ -20,9 +20,11 @@ const requestSchema = new mongoose.Schema({
     location: {
         type: locationSchema,
         required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
-}, {
-    methods: {}
 })
 
 const Request = mongoose.model("Request", requestSchema)

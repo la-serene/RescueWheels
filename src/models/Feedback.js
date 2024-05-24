@@ -22,11 +22,8 @@ const feedbackSchema = new mongoose.Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now,
-        expires: 3600,
+        default: Date.now
     }
-}, {
-    methods: {}
 })
 
 const Feedback = mongoose.model("Feedback", feedbackSchema)

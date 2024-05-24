@@ -38,11 +38,8 @@ const userSchema = new mongoose.Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now,
-        expires: 3600,
+        default: Date.now
     }
-}, {
-    methods: {}
 })
 
 const User = mongoose.model("User", userSchema)
