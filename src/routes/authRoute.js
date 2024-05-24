@@ -15,6 +15,6 @@ router.post("/signup", signUp)
 router.post("/signin", signIn)
 router.post("/sendResetPasswordMail", sendResetPasswordMail)
 router.get("/resetPassword", validateResetToken)
-router.post("/resetPassword/:userId", resetPassword)
+router.post("/resetPassword/:id", resetPassword)
 
 export default router
