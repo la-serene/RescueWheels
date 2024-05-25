@@ -22,8 +22,7 @@ import db from "./dbs/init.mongodb.js"
 const httpServer = createServer(app)
 
 // init socket
-const server = createServer(app);
-const io = new Server(server)
+const io = new Server(httpServer)
 initializeSocket(io)
 
 // init routes
