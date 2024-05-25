@@ -18,6 +18,7 @@ export const updateProfile = async (req, res) => {
 }
 
 export const createRequest = async (req, res) => {
+    // At a time, user can broadcast only one request.
     const userId = req.params.userId
     const { latitude, longitude } = req.body.location
 
@@ -25,7 +26,8 @@ export const createRequest = async (req, res) => {
         userId: userId,
         location: {
             latitude: latitude,
-            longitude: longitude }
+            longitude: longitude
+        }
     }).save()
 
     res.status(200).json({
