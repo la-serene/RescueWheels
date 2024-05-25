@@ -34,3 +34,12 @@ export const createRequest = async (req, res) => {
         message: "Request created"
     })
 }
+
+export const deleteRequest = async (req, res) => {
+    const requestId = req.params.requestId
+    await Request.findByIdAndDelete(requestId).exec()
+
+    res.status(200).json({
+        message: "Request deleted"
+    })
+}

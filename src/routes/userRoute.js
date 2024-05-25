@@ -2,13 +2,15 @@ import express from 'express'
 import multer from 'multer'
 import {
     updateProfile,
-    createRequest
+    createRequest,
+    deleteRequest
 } from '../controllers/userController.js'
 
 const router = express.Router()
 const upload = multer()
 
 router.put("/updateUserProfile/:userId", updateProfile)
-router.post("/request/:userId", createRequest)
+router.post("/createRequest/:userId", createRequest)
+router.delete("deleteRequest/:requestId", deleteRequest)
 
 export default router
