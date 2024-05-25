@@ -2,8 +2,11 @@ import express from "express"
 import 'dotenv/config'
 import morgan from "morgan"
 import helmet from "helmet"
-import route from "./routes/route.js"
 import compression from "compression"
+import { createServer } from "http"
+import { Server } from "socket.io"
+import initializeSocket from "./sockets/socket.js";
+import route from "./routes/route.js"
 const app = express()
 
 // init middlewares
@@ -15,9 +18,17 @@ app.use(express.urlencoded({ extended: true }))
 // init db
 import db from "./dbs/init.mongodb.js"
 
+// init server
+const httpServer = createServer(app)
+
+// init socket
+const server = createServer(app);
+const io = new Server(server)
+initializeSocket(io)
+
 // init routes
 route(app)
 
 // handling err
 
-export default app
+export default httpServer
