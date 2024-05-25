@@ -6,6 +6,10 @@ const serviceSchema = new mongoose.Schema({
         required: true,
         ref: "Provider"
     },
+    name: {
+        type: String,
+        required: true,
+    },
     description: {
         type: String,
         required: true,
