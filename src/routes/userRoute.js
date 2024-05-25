@@ -10,7 +10,5 @@ const router = express.Router()
 const upload = multer()
 
 router.put("/updateUserProfile/:userId", updateProfile)
-router.post("/createRequest/:userId", createRequest)
-router.delete("deleteRequest/:requestId", deleteRequest)
 
 export default router
