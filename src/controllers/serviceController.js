@@ -17,6 +17,26 @@ export const submitService = async (req, res) => {
     })
 }
 
+export const getServiceByServiceId = async (req, res) => {
+    const serviceId = req.params.serviceId
+    const service = await Service.findById(serviceId).exec()
+
+    res.status(200).json({
+        service: service,
+        message: "Service retrieved."
+    })
+}
+
+export const getAllServiceFromProviderId = async (req, res) => {
+    const providerId = req.params.providerId
+    const services = await Service.find({ providerId: providerId }).exec()
+
+    res.status(200).json({
+        services: services,
+        message: "All services retrieved."
+    })
+}
+
 export const getServiceByQuantity = async (req, res) => {
     const quantity = req.params.quantity
     const services = await Service.find().limit(quantity).exec()
@@ -24,6 +44,17 @@ export const getServiceByQuantity = async (req, res) => {
     res.status(200).json({
         services: services,
         message: `Successfully retrieve ${quantity} services.`
+    })
+}
+
+export const getServiceByQuantityFromProviderId = async (req, res) => {
+    const providerId = req.params.providerId
+    const quantity = req.params.quantity
+    const services = await Service.find({ providerId: providerId }).limit(quantity).exec()
+
+    res.status(200).json({
+        services: services,
+        message: `Successfully retrieve ${quantity} services from provider ${providerId}.`
     })
 }
 

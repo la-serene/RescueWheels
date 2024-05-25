@@ -13,7 +13,7 @@ export const updateProfile = async (req, res) => {
     }).exec()
 
     res.status(200).json({
-        message: "Profile updated"
+        message: "Profile updated."
     })
 }
 
