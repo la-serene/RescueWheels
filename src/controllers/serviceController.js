@@ -38,8 +38,18 @@ export const getAllServiceFromProviderId = async (req, res) => {
 }
 
 export const getServiceByQuantity = async (req, res) => {
+    let page = req.query.p
     const quantity = req.params.quantity
-    const services = await Service.find().limit(quantity).exec()
+
+    if (page === undefined || page === 0 || page === 1) {
+        page = 1
+    }
+
+    const services = await Service
+        .find()
+        .skip((page - 1) * quantity)
+        .limit(quantity)
+        .exec()
 
     res.status(200).json({
         services: services,
