@@ -9,7 +9,7 @@ const feedbackSchema = new mongoose.Schema({
     to: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: "Provider"
+        ref: "User"
     },
     description: {
         type: String,
@@ -18,6 +18,7 @@ const feedbackSchema = new mongoose.Schema({
     comment: [
         {
             type: mongoose.Schema.Types.ObjectId,
+            default: [],
             ref: ["Comment"]
         }
     ],
@@ -35,14 +36,13 @@ const feedbackSchema = new mongoose.Schema({
 }, {
     methods: {
         getNumberOfLike: async function () {
-            return this.parent.likeList.length
+            return Comment.likeList.length
         },
 
         likeFeedback: async function (userId) {
-            let feedback = this.parent
-            if (!feedback.likeList.includes(userId)) {
-                feedback.likeList.push(userId)
-                await feedback.save()
+            if (!this.likeList.includes(userId)) {
+                this.likeList.push(userId)
+                await this.save()
             } else {
                 console.log("You already liked this feedback.")
             }

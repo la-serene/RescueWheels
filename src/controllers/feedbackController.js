@@ -5,7 +5,7 @@ export const createFeedback = async (req, res) => {
     const toId = req.params.to
     const description = req.body.description
 
-    await new Feedback({
+    const feedback = await new Feedback({
         from: fromId,
         to: toId,
         description: description
