@@ -14,8 +14,8 @@ export const attr = async (req) => {
   }
 };
 export const sendMessage = async (req, res) => {
-  const senderId = req.senderId;
-  const receiverId = req.receiverId;
+  const senderId = req.body.senderId;
+  const receiverId = req.body.receiverId;
   const text = req.text;
   const message = new Message({ senderId, receiverId, text });
   Message.create(req.body);
