@@ -1,12 +1,12 @@
 import mongoose from "mongoose"
 
-const serviceSchema = new mongoose.Schema({
+const notificationSchema = new mongoose.Schema({
     from: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: "Provider"
+        ref: ["User", "Provider"]
     },
-    name: {
+    type: {
         type: String,
         required: true,
     },
@@ -14,11 +14,15 @@ const serviceSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    isViewed: {
+        type: Boolean,
+        default: false,
+    },
     createdAt: {
         type: Date,
         default: Date.now
     }
 })
 
-const Service = mongoose.model("Service", serviceSchema)
-export default Service
+const Notification = mongoose.model("Notification", notificationSchema)
+export default Notification

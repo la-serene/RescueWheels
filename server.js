@@ -1,6 +1,6 @@
 import httpServer from "./src/app.js"
 
-const PORT = process.env.PORT
+const PORT = process.env.HTTP_SERVER_PORT
 
 httpServer.listen(PORT, () => {
     console.log(`Server starts at http://localhost:${PORT}`)
