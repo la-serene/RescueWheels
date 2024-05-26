@@ -1,24 +1,17 @@
 import mongoose from "mongoose"
 
-const locationSchema = new mongoose.Schema({
-    latitude: {
-        type: Number,
-        required: true,
-    },
-    longitude: {
-        type: Number,
-        required: true,
-    }
-}, {_id: false})
-
 const requestSchema = new mongoose.Schema({
     from: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "User"
     },
-    location: {
-        type: locationSchema,
+    latitude: {
+        type: Number,
+        required: true
+    },
+    longitude: {
+        type: Number,
         required: true
     },
     createdAt: {
