@@ -3,8 +3,7 @@ import mongoose from "mongoose"
 const commentSchema = new mongoose.Schema({
     fromUserId: {
         type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: ["User", "Provider"]
+        ref: "User",
     },
     belongToFeedbackId: {
         type: mongoose.Schema.Types.ObjectId,
