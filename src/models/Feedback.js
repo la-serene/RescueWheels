@@ -35,7 +35,17 @@ const feedbackSchema = new mongoose.Schema({
 }, {
     methods: {
         getNumberOfLike: async function () {
-            const likeList = this.parent.likeList.length
+            return this.parent.likeList.length
+        },
+
+        likeFeedback: async function (userId) {
+            let feedback = this.parent
+            if (!feedback.likeList.includes(userId)) {
+                feedback.likeList.push(userId)
+                await feedback.save()
+            } else {
+                console.log("You already liked this feedback.")
+            }
         }
     }
 })

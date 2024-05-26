@@ -15,3 +15,15 @@ export const createFeedback = async (req, res) => {
         message: "Feedback created."
     })
 }
+
+export const likeFeedback = async (req) => {
+    const userId = req.params.userId
+    const feedbackId = req.params.feedbackId
+
+    const feedback = await Feedback.findById(feedbackId).exec()
+    await feedback.likeFeedback(userId)
+
+    return {
+        message: "Feedback liked."
+    }
+}
