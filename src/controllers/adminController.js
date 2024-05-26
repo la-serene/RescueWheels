@@ -1,4 +1,4 @@
-import PendingService from "../models/PendingService.js";
+import PendingService from "../models/PendingService.js"
 
 export const approvePendingService = async (req, res) => {
     const pendingServiceId = req.params

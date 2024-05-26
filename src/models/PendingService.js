@@ -1,5 +1,5 @@
 import mongoose from "mongoose"
-import Service from "./Service.js";
+import Service from "./Service.js"
 
 const pendingServiceSchema = new mongoose.Schema({
     from: {

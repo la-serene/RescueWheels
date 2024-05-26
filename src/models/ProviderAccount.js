@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -23,10 +23,10 @@ const userSchema = new mongoose.Schema({
   address: {
     type: String,
   },
-});
+})
 location: {
 
 }
 
-const Provider = mongoose.model("Provider", userSchema);
-export default Provider;
+const Provider = mongoose.model("Provider", userSchema)
+export default Provider

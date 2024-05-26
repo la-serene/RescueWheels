@@ -1,4 +1,4 @@
-import Request from "../models/Request.js";
+import Request from "../models/Request.js"
 
 export const createRequest = async (req, res) => {
     // At a time, user can broadcast only one request.

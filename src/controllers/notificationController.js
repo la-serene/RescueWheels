@@ -1,4 +1,4 @@
-import Notification from "../models/Request.js";
+import Notification from "../models/Request.js"
 
 export const createNotification = async (req) => {
     const from = req.userId
