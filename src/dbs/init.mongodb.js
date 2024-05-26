@@ -3,7 +3,7 @@
 import mongoose from "mongoose"
 const connectString = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@rescuewheels.d0n9rgt.mongodb.net/?retryWrites=true&w=majority&appName=RescueWheels`
 import { countConnect } from "../helpers/check.connect.js"
-
+    
 class Database {
     constructor() {
         this.connect()
