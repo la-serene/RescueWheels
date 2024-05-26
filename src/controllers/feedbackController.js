@@ -1,5 +1,5 @@
 import Feedback from "../models/Feedback.js"
-import { createComment } from "../controllers/commentController.js"
+import { createComment } from "./commentController.js"
 
 export const createFeedback = async (req, res) => {
     const fromUserId = req.params.fromUserId
@@ -13,7 +13,22 @@ export const createFeedback = async (req, res) => {
     }).save()
 
     res.status(200).json({
-        message: "Feedback created."
+        message: "Feedback created.",
+        feedback: feedback
+    })
+}
+
+export const getFeedbackFromUserIdByQuantity = async (req, res) => {
+    const fromUserId = req.params.fromUserId
+    const quantity = req.params.quantity
+
+    const feedbacks = await Feedback.find({
+        fromUserId
+    }).limit(parseInt(quantity)).exec()
+
+    res.status(200).json({
+        feedbacks: feedbacks,
+        message: "Feedbacks retrieved."
     })
 }
 
