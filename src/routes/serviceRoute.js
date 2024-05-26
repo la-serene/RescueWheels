@@ -14,8 +14,7 @@ const upload = multer()
 
 router.post("/submitService/:providerId", submitService)
 router.get("/getServiceByServiceId/:serviceId", getServiceByServiceId)
-router.get("/getServiceByQuantity/:quantity", getServiceByQuantity)
-router.get("/getServiceFromProviderIdByQuantity/:providerId/:quantity", getServiceFromProviderIdByQuantity)
+router.get("/getServiceByQuantity/:quantity/:fromProviderId?", getServiceByQuantity)
 router.put("/updateService/:providerId/:serviceId", updateService)
 router.delete("/deleteService/:serviceId", deleteService)
 

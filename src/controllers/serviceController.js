@@ -45,47 +45,31 @@ export const getServiceByServiceId = async (req, res) => {
 export const getServiceByQuantity = async (req, res) => {
     let page = req.query.p
     const quantity = req.params.quantity
+    const fromProviderId = req.params.fromProviderId
 
     if (page === undefined || page === 0 || page === 1) {
         page = 1
     }
 
     try {
-        const services = await Service
-            .find()
-            .skip((page - 1) * quantity)
-            .limit(quantity)
-            .exec()
+        let services
+        if (!fromProviderId) {
+            services = await Service
+                .find()
+                .skip((page - 1) * quantity)
+                .limit(quantity)
+                .exec()
+        } else {
+            services = await Service
+                .find({ fromProviderId })
+                .skip((page - 1) * quantity)
+                .limit(quantity)
+                .exec()
+        }
 
         res.status(200).json({
             services: services,
             message: `Successfully retrieve ${quantity} services.`
-        })
-    } catch (e) {
-        console.log(e.message)
-        res.status(500).json({
-            message: "Services not found."
-        })
-    }
-}
-
-export const getServiceFromProviderIdByQuantity = async (req, res) => {
-    let page = req.query.p
-    const providerId = req.params.providerId
-    const quantity = req.params.quantity
-
-    if (page === undefined || page === 0 || page === 1 || page === "null") {
-        page = 1
-    }
-
-    try {
-        const services = await Service.find({ providerId: providerId })
-            .skip((page - 1) * quantity)
-            .limit(quantity).exec()
-
-        res.status(200).json({
-            services: services,
-            message: `Successfully retrieve ${quantity} services from provider ${providerId}.`
         })
     } catch (e) {
         console.log(e.message)
@@ -124,7 +108,7 @@ export const deleteService = async (req, res) => {
     const serviceId = req.params.serviceId
 
     try {
-        await Service.deleteOne({ _id: serviceId }).exec()
+        await Service.deleteOne({_id: serviceId}).exec()
 
         res.status(200).json({
             message: "Service deleted."

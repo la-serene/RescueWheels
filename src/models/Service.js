@@ -1,16 +1,16 @@
 import mongoose from "mongoose"
 
 const serviceSchema = new mongoose.Schema({
-    from: {
+    fromProviderId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "Provider"
     },
-    name: {
+    serviceName: {
         type: String,
         required: true,
     },
-    description: {
+    serviceDescription: {
         type: String,
         required: true,
     },
