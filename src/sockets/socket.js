@@ -1,5 +1,5 @@
 import chatHandler from "./chat.socket.js"
-import notificationHandler from "./notification.socket.js"
+import feedbackHandler from "./feedback.socket.js"
 
 export default function initializeSocket(io) {
     io.use((socket, next) => {
@@ -22,7 +22,7 @@ export default function initializeSocket(io) {
         })
 
         chatHandler(socket)
-        notificationHandler(socket)
+        feedbackHandler(socket)
 
         socket.on('disconnect', () => {
             console.log('user disconnected')
