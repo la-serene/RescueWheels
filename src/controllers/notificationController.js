@@ -6,8 +6,10 @@ export const createNotification = async (request) => {
     const description = "You have a new " + notificationType + " from " + notificationSource + "."
 
     await new Notification({
-        from: from,
-        type: type,
-        description: description
+        fromUserId,
+        toUserId,
+        notificationType,
+        notificationSource,
+        description
     }).save()
 }
