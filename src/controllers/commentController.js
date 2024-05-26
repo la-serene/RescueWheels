@@ -1,15 +1,20 @@
 import Comment from "../models/Comment.js"
 
-export const createComment = async (req, res) => {
+export const createComment = async (req) => {
     const from = req.params.from
     const feedbackId = req.params.feedbackId
     const description = req.body.description
 
-    const comment = await new Comment({
-        from: from,
-        belongTo: feedbackId,
-        description: description
-    }).save()
+    try {
+        const comment = await new Comment({
+            from: from,
+            belongTo: feedbackId,
+            description: description
+        }).save()
 
-    return comment._id
+        return comment._id
+    } catch (e) {
+        console.log(e.message)
+        return null
+    }
 }

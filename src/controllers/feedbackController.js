@@ -1,35 +1,46 @@
 import Feedback from "../models/Feedback.js"
-import { createComment } from "./commentController.js"
+import {createComment} from "./commentController.js"
 
 export const createFeedback = async (req, res) => {
     const fromUserId = req.params.fromUserId
     const toUserId = req.params.toUserId
     const feedbackDescription = req.body.feedbackDescription
 
-    const feedback = await new Feedback({
-        fromUserId,
-        toUserId,
-        feedbackDescription
-    }).save()
+    try {
+        const feedback = await new Feedback({
+            fromUserId,
+            toUserId,
+            feedbackDescription
+        }).save()
 
-    res.status(200).json({
-        message: "Feedback created.",
-        feedback: feedback
-    })
+        res.status(200).json({
+            message: "Feedback created.",
+            feedback: feedback
+        })
+    } catch (e) {
+        console.log(e.message)
+        res.status(400).json({
+            message: "Failed to create feedback."
+        })
+    }
 }
 
 export const getFeedbackFromUserIdByQuantity = async (req, res) => {
     const fromUserId = req.params.fromUserId
     const quantity = req.params.quantity
 
-    const feedbacks = await Feedback.find({
-        fromUserId
-    }).limit(parseInt(quantity)).exec()
+    try {
+        const feedbacks = await Feedback.find({
+            fromUserId
+        }).limit(parseInt(quantity)).exec()
 
-    res.status(200).json({
-        feedbacks: feedbacks,
-        message: "Feedbacks retrieved."
-    })
+        res.status(200).json({
+            feedbacks: feedbacks,
+            message: "Feedbacks retrieved."
+        })
+    } catch (e) {
+        console.log(e.message)
+    }
 }
 
 export const likeFeedback = async (req) => {
