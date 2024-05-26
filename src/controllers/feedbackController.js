@@ -17,13 +17,13 @@ export const createFeedback = async (req, res) => {
 }
 
 export const likeFeedback = async (req) => {
-    const userId = req.params.userId
-    const feedbackId = req.params.feedbackId
+    const fromUserId = req.fromUserId
+    const toFeedbackId = req.toFeedbackId
 
-    const feedback = await Feedback.findById(feedbackId).exec()
-    await feedback.likeFeedback(userId)
-
-    return {
-        message: "Feedback liked."
+    try {
+        const feedback = await Feedback.findById(feedbackId).exec()
+        await feedback.likeFeedback(userId)
+    } catch (e) {
+        throw new Error(e.message)
     }
 }

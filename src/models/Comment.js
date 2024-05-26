@@ -1,19 +1,19 @@
 import mongoose from "mongoose"
 
 const commentSchema = new mongoose.Schema({
-    from: {
+    fromUserId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: ["User", "Provider"]
     },
-    description: {
-        type: String,
-        required: true,
-    },
-    belongTo: {
+    belongToFeedbackId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "Feedback"
+    },
+    commentDescription: {
+        type: String,
+        required: true,
     },
     createdAt: {
         type: Date,

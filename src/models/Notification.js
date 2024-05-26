@@ -1,18 +1,27 @@
 import mongoose from "mongoose"
 
 const notificationSchema = new mongoose.Schema({
-    from: {
+    fromUserId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: ["User", "Provider"]
     },
-    type: {
+    toUserId: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: ["User", "Provider"]
+    },
+    notificationType: {
         type: String,
         required: true,
     },
+    notificationSource: {
+        type: String,
+        required: true
+    },
     description: {
         type: String,
-        required: true,
+        required: true
     },
     isViewed: {
         type: Boolean,
