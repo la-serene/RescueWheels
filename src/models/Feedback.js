@@ -36,8 +36,7 @@ const feedbackSchema = new mongoose.Schema({
 }, {
     methods: {
         getNumberOfLike: async function () {
-            const likeList = this.parent.likeList
-
+            const likeList = this.parent.likeList.length
         }
     }
 })
