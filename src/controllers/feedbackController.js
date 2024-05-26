@@ -50,6 +50,24 @@ export const getFeedbackFromUserIdByQuantity = async (req, res) => {
     }
 }
 
+export const getFeedbackById = async (req, res) => {
+    const feedbackId = req.params.feedbackId
+
+    try {
+        const feedback = await Feedback.findById(feedbackId).exec()
+
+        res.status(200).json({
+            feedback: feedback,
+            message: "Feedback retrieved."
+        })
+    } catch (e) {
+        console.log(e.message)
+        res.status(400).json({
+            message: "Failed to retrieve feedback."
+        })
+    }
+}
+
 export const likeFeedback = async (req) => {
     const fromUserId = req.fromUserId
     const toFeedbackId = req.toFeedbackId

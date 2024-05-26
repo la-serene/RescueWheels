@@ -42,24 +42,6 @@ export const getServiceByServiceId = async (req, res) => {
     }
 }
 
-export const getAllServiceFromProviderId = async (req, res) => {
-    const providerId = req.params.providerId
-
-    try {
-        const services = await Service.find({ providerId: providerId }).exec()
-
-        res.status(200).json({
-            services: services,
-            message: "All services retrieved."
-        })
-    } catch (e) {
-        console.log(e.message)
-        res.status(500).json({
-            message: "Services not found."
-        })
-    }
-}
-
 export const getServiceByQuantity = async (req, res) => {
     let page = req.query.p
     const quantity = req.params.quantity
