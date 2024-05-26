@@ -1,4 +1,4 @@
-import User from "../models/UserAccount.js";
+import User from "../models/UserAccount.js"
 
 export const updateProfile = async (req, res) => {
     const userId = req.params.userId

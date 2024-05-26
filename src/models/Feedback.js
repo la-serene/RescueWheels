@@ -1,23 +1,50 @@
 import mongoose from "mongoose"
 
 const feedbackSchema = new mongoose.Schema({
-    from: {
+    fromUserId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: ["User", "Provider"]
+        ref: "User",
     },
-    to: {
+    toUserId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: ["User", "Provider"]
+        ref: "Provider"
     },
-    description: {
+    feedbackDescription: {
         type: String,
         required: true,
     },
+    listComment: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            default: [],
+            ref: "Comment"
+        }
+    ],
+    listLike: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            default: [],
+            ref: "User"
+        }
+    ],
     createdAt: {
         type: Date,
         default: Date.now
+    }
+}, {
+    methods: {
+        likeFeedback: async function (userId) {
+            if (!this.listLike.includes(userId)) {
+                this.listLike.push(userId)
+                await this.save()
+            }
+        },
+
+        getNumberOfLike: async function () {
+            return this.listLike.length
+        },
     }
 })
 
