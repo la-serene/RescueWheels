@@ -27,10 +27,10 @@ const pendingServiceSchema = new mongoose.Schema({
 }, {
     methods: {
         createService: async function () {
-            const providerId = this.from
-            const serviceId = this.to
-            const name = this.name
-            const description = this.description
+            const providerId = this.parent.from
+            const serviceId = this.parent.to
+            const name = this.parent.name
+            const description = this.parent.description
 
             if (!serviceId) {
                 await new Service({providerId, name, description}).save()
