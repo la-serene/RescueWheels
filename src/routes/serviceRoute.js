@@ -5,7 +5,7 @@ import {
     getServiceByServiceId,
     getAllServiceFromProviderId,
     getServiceByQuantity,
-    getServiceByQuantityFromProviderId,
+    getServiceFromProviderIdByQuantity,
     updateService,
     deleteService,
 } from '../controllers/serviceController.js'
@@ -17,7 +17,7 @@ router.post("/submitService/:providerId", submitService)
 router.get("/getServiceByServiceId/:serviceId", getServiceByServiceId)
 router.get("/getAllServiceFromProviderId/:providerId", getAllServiceFromProviderId)
 router.get("/getServiceByQuantity/:quantity", getServiceByQuantity)
-router.get("/getServiceByQuantityFromProviderId/:providerId/:quantity", getServiceByQuantityFromProviderId)
+router.get("/getServiceFromProviderIdByQuantity/:providerId/:quantity", getServiceFromProviderIdByQuantity)
 router.put("/updateService/:providerId/:serviceId", updateService)
 router.delete("/deleteService/:serviceId", deleteService)
 

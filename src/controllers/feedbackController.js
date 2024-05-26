@@ -26,13 +26,20 @@ export const createFeedback = async (req, res) => {
 }
 
 export const getFeedbackFromUserIdByQuantity = async (req, res) => {
+    let page = req.query.p
     const fromUserId = req.params.fromUserId
     const quantity = req.params.quantity
+
+    if (page === undefined || page === "null" || page === 0 || page === 1) {
+        page = 1
+    }
 
     try {
         const feedbacks = await Feedback.find({
             fromUserId
-        }).limit(parseInt(quantity)).exec()
+        })
+            .skip((page - 1) * quantity)
+            .limit(parseInt(quantity)).exec()
 
         res.status(200).json({
             feedbacks: feedbacks,
