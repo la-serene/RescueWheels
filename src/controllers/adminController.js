@@ -20,7 +20,7 @@ export const approvePendingService = async (req, res) => {
 }
 
 export const rejectPendingService = async (req, res) => {
-    const pendingServiceId = req.params
+    const pendingServiceId = req.params.pendingServiceId
 
     try {
         await PendingService.deleteOne({_id: pendingServiceId}).exec()
