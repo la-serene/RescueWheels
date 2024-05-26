@@ -1,5 +1,7 @@
 import Provider from "../models/ProviderAccount.js"
 
+
+
 export const updateProviderProfile = async (req, res) => {
     const providerId = req.params.providerId
     const {name, phoneNumber, address, location} = req.body
