@@ -5,13 +5,11 @@ export const createComment = async (req, res) => {
     const feedbackId = req.params.feedbackId
     const description = req.body.description
 
-    await new Comment({
+    const comment = await new Comment({
         from: from,
         belongTo: feedbackId,
         description: description
     }).save()
 
-    res.status(200).json({
-        message: "Feedback created."
-    })
+    return comment._id
 }

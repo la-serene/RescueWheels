@@ -42,6 +42,13 @@ const feedbackSchema = new mongoose.Schema({
             }
         },
 
+        addCommentId: async function (commentId) {
+            if (!this.listComment.includes(commentId)) {
+                this.listComment.push(commentId)
+                await this.save()
+            }
+        },
+
         getNumberOfLike: async function () {
             return this.listLike.length
         },
