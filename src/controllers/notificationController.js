@@ -1,19 +1,19 @@
-import Notification from "../models/Request.js";
+import Notification from "../models/Request.js"
 
-export const createNotification = async (req) => {
-    const from = req.userId
-    const type = req.type
+export const createNotification = async (request) => {
+    const {fromUserId, toUserId, notificationType, notificationSource} = request
 
-    let description
-    if (type === "feedback_comment") {
-        description = "You have a new comment on your feedback."
-    } else if (type === "feedback_like") {
-        description = "Someone liked your feedback."
+    const description = "You have a new " + notificationType + " from " + notificationSource + "."
+
+    try {
+        await new Notification({
+            fromUserId,
+            toUserId,
+            notificationType,
+            notificationSource,
+            description
+        }).save()
+    } catch (e) {
+        console.log(e.message)
     }
-
-    await new Notification({
-        from: from,
-        type: type,
-        description: description
-    }).save()
 }

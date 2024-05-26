@@ -5,7 +5,7 @@ import helmet from "helmet"
 import compression from "compression"
 import { createServer } from "http"
 import { Server } from "socket.io"
-import initializeSocket from "./sockets/socket.js";
+import initializeSocket from "./sockets/socket.js"
 import route from "./routes/route.js"
 const app = express()
 

@@ -1,9 +1,9 @@
-import express from "express";
-import multer from "multer";
+import express from "express"
+import multer from "multer"
 import {
     createRequest,
     deleteRequest
-} from "../controllers/requestController.js";
+} from "../controllers/requestController.js"
 
 const router = express.Router()
 const upload = multer()
