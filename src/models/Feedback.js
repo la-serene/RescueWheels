@@ -1,15 +1,16 @@
 import mongoose from "mongoose"
+import Service from "./Service.js";
 
 const feedbackSchema = new mongoose.Schema({
     from: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: ["User", "Provider"]
+        ref: "User",
     },
     to: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: ["User", "Provider"]
+        ref: "Provider"
     },
     description: {
         type: String,
@@ -24,12 +25,20 @@ const feedbackSchema = new mongoose.Schema({
     likeList: [
         {
             type: mongoose.Schema.Types.ObjectId,
+            default: [],
             ref: "User"
         }
     ],
     createdAt: {
         type: Date,
         default: Date.now
+    }
+}, {
+    methods: {
+        getNumberOfLike: async function () {
+            const likeList = this.parent.likeList
+
+        }
     }
 })
 
