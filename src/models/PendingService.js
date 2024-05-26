@@ -2,20 +2,20 @@ import mongoose from "mongoose"
 import Service from "./Service.js"
 
 const pendingServiceSchema = new mongoose.Schema({
-    from: {
+    fromProviderId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "Provider"
     },
-    to: {
+    toServiceId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Service"
     },
-    name: {
+    pendingServiceName: {
         type: String,
         required: true,
     },
-    description: {
+    pendingServiceDescription: {
         type: String,
         required: true,
     },
@@ -27,18 +27,18 @@ const pendingServiceSchema = new mongoose.Schema({
 }, {
     methods: {
         createService: async function () {
-            const providerId = this.from
-            const serviceId = this.to
-            const name = this.name
-            const description = this.description
+            const fromProviderId = this.fromProviderId
+            const toServiceId = this.toServiceId
+            const pendingServiceName = this.pendingServiceName
+            const pendingServiceDescription = this.pendingServiceDescription
 
-            if (!serviceId) {
-                await new Service({providerId, name, description}).save()
+            if (!toServiceId) {
+                await new Service({fromProviderId, pendingServiceName, pendingServiceDescription}).save()
                 console.log("Successfully created service from pending service.")
             } else {
-                const service = await Service.findById(serviceId).exec()
-                service.name = name
-                service.description = description
+                const service = await Service.findById(toServiceId).exec()
+                service.ServiceName = pendingServiceName
+                service.pendingServiceDescription = pendingServiceDescription
 
                 await service.save()
                 console.log("Successfully updated service from pending service.")
