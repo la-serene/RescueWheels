@@ -1,4 +1,4 @@
-import Provider from "../models/ProviderAccount.js";
+import Provider from "../models/ProviderAccount.js"
 
 export const updateProviderProfile = async (req, res) => {
     const providerId = req.params.providerId

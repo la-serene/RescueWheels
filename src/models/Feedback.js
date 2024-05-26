@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from "mongoose"
 
 const feedbackSchema = new mongoose.Schema({
     fromUserId: {
@@ -55,5 +55,5 @@ const feedbackSchema = new mongoose.Schema({
     }
 })
 
-const Feedback = mongoose.model("Feedback", feedbackSchema);
-export default Feedback;
+const Feedback = mongoose.model("Feedback", feedbackSchema)
+export default Feedback

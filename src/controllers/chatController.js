@@ -1,32 +1,38 @@
-import Message from "../models/Message";
-import io from "../app";
+import Message from "../models/Message.js"
 
-export const attr = async (req) => {
-  try {
-    await Message.find({}, (err, messages) => {
-      if (err) sendStatus(404);
-      res.send(messages);
-    });
-  } catch {
-    (e) => {
-      console.log(e.message);
-    };
-  }
-};
-export const sendMessage = async (req, res) => {
-  const senderId = req.body.senderId;
-  const receiverId = req.body.receiverId;
-  const text = req.body.text;
-  const message = new Message({ senderId, receiverId, text });
-  Message.create(req.body);
-  try {
-    await io.emit("receiveMessage", message);
-    res
-      .status(200)
-      .json({ success: true, message: "Message sent successfully" });
-  } catch {
-    (e) => {
-      console.log(e.message);
-    };
-  }
-};
+export const getMessageFromUserIdByQuantity = async (req, res) => {
+    let page = req.query.p
+    const {fromUserId, quantity} = req.params
+
+    if (page === undefined || page === 0 || page === 1) {
+        page = 1
+    }
+
+    try {
+        const messages = await Message.findById(fromUserId)
+            .skip((page - 1) * quantity)
+            .limit(quantity)
+            .limit(quantity)
+            .exec()
+        res.status(200).json({
+          success: true,
+          messages})
+    } catch (e) {
+        res.status(500).json({
+          success: false,
+          message: e.message
+        })
+    }
+}
+
+export const sendMessage = async (req) => {
+    const {
+        senderId, receiverId, text
+    } = req
+
+    try {
+        await new Message({senderId, receiverId, text}).save()
+    } catch (e) {
+        console.log(e.message)
+    }
+}
