@@ -15,6 +15,18 @@ const feedbackSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    comment: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: ["Comment"]
+        }
+    ],
+    likeList: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        }
+    ],
     createdAt: {
         type: Date,
         default: Date.now
