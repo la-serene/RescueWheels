@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 
 const requestSchema = new mongoose.Schema({
-    from: {
+    fromUserId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "User"
