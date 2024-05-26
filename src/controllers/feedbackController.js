@@ -50,7 +50,7 @@ export const getFeedbackFromUserIdByQuantity = async (req, res) => {
     }
 }
 
-export const getFeedbackById = async (req, res) => {
+export const getFeedbackByFeedbackId = async (req, res) => {
     const feedbackId = req.params.feedbackId
 
     try {
