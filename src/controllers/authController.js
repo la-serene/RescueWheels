@@ -3,12 +3,12 @@ import Token from "../models/Token.js"
 import bcrypt from "bcrypt"
 import crypto from "crypto"
 import jwt from 'jsonwebtoken'
-import { sendMail } from "../services/send.mail.js"
+import {sendMail} from "../services/send.mail.js"
 
 export const signUp = async (req, res) => {
-    const { email, password, ...rest } = req.body
+    const {email, password, ...rest} = req.body
 
-    if (await User.findOne({ email: email }) !== null) {
+    if (await User.findOne({email: email}) !== null) {
         res.status(400).json({
             message: "Email already exists"
         })
@@ -28,13 +28,13 @@ export const signUp = async (req, res) => {
 }
 
 export const signIn = async (req, res) => {
-    const { email, password } = req.body
+    const {email, password} = req.body
 
-    const user = await User.findOne({ email: email })
+    const user = await User.findOne({email: email})
 
     const isMatch = await bcrypt.compare(password, user.password)
     if (isMatch) {
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '720h' })
+        const token = jwt.sign({id: user._id}, process.env.JWT_SECRET, {expiresIn: '720h'})
         res.status(200).json({
             message: "Successfully sign in!",
             token: token,
@@ -48,15 +48,15 @@ export const signIn = async (req, res) => {
 }
 
 export const sendResetPasswordMail = async (req, res) => {
-    const { email } = req.body
+    const {email} = req.body
 
-    const user = await User.findOne({ email: email })
+    const user = await User.findOne({email: email})
     if (user === null) {
         res.status(400).json({
             message: "User account not found."
         })
     } else {
-        let token = await Token.findOne({ id: user._id })
+        let token = await Token.findById(user._id)
         if (token) {
             await token.deleteOne()
         }
@@ -83,7 +83,7 @@ export const validateResetToken = async (req, res) => {
     const id = req.query.id
     const token = req.query.token
 
-    const resetToken = Token.findOne({ id: id })
+    const resetToken = Token.findById(id)
     if (!resetToken) {
         res.status(400).json({
             message: "Invalid reset token.",
