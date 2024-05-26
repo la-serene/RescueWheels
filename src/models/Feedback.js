@@ -1,5 +1,4 @@
 import mongoose from "mongoose"
-import Service from "./Service.js";
 
 const feedbackSchema = new mongoose.Schema({
     from: {
