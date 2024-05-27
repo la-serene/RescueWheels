@@ -29,7 +29,7 @@ export const getRequestByUserId = async (req, res) => {
     const fromUserId = req.params.fromUserId
 
     try {
-        const request = await Request.findById(fromUserId).exec()
+        const request = await Request.findOne({ fromUserId }).exec()
         res.status(200).json({
             request,
             message: "Request found"

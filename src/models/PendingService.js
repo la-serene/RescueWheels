@@ -36,7 +36,7 @@ const pendingServiceSchema = new mongoose.Schema({
                 await new Service({fromProviderId, pendingServiceName, pendingServiceDescription}).save()
                 console.log("Successfully created service from pending service.")
             } else {
-                const service = await Service.findById(toServiceId).exec()
+                const service = await Service.findOne({ toServiceId }).exec()
                 service.ServiceName = pendingServiceName
                 service.pendingServiceDescription = pendingServiceDescription
 

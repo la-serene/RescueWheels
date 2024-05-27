@@ -10,7 +10,7 @@ export const getMessageByQuantityFromUserId = async (req, res) => {
     }
 
     try {
-        const messages = await Message.findById(fromUserId)
+        const messages = await Message.find({ fromUserId })
             .skip((page - 1) * quantity)
             .limit(quantity)
             .limit(quantity)

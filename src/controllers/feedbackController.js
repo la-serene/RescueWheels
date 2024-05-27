@@ -82,7 +82,7 @@ export const likeFeedback = async (req) => {
     const toFeedbackId = req.toFeedbackId
 
     try {
-        const feedback = await Feedback.findById(toFeedbackId).exec()
+        const feedback = await Feedback.find({ toFeedbackId }).exec()
         await feedback.likeFeedback(fromUserId)
     } catch (e) {
         throw new Error(e.message)
@@ -97,7 +97,7 @@ export const commentFeedback = async (req) => {
     } = req
 
     try {
-        const feedback = await Feedback.findById(toFeedbackId).exec()
+        const feedback = await Feedback.findOne({ toFeedbackId }).exec()
         const newCommentId = await createComment({
             fromUserId,
             toFeedbackId,
