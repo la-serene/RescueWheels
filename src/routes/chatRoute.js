@@ -1,8 +1,8 @@
 import express from "express"
 import multer from "multer"
-import { getMessageFromUserIdByQuantity } from "../controllers/chatController.js"
+import { getMessageByQuantityFromUserId } from "../controllers/chatController.js"
 
 const router = express.Router()
-router.get("/getMessageFromUserIdByQuantity/:fromUserId/:quantity", getMessageFromUserIdByQuantity)
+router.get("/getMessageByQuantityFromUserId/:quantity/:fromUserId", getMessageByQuantityFromUserId)
 
 export default router

@@ -1,8 +1,9 @@
 import Message from "../models/Message.js"
 
-export const getMessageFromUserIdByQuantity = async (req, res) => {
+export const getMessageByQuantityFromUserId = async (req, res) => {
     let page = req.query.p
-    const {fromUserId, quantity} = req.params
+    const quantity = req.params.quantity
+    const fromUserId = req.params.fromUserId
 
     if (page === undefined || page === 0 || page === 1) {
         page = 1
@@ -15,17 +16,18 @@ export const getMessageFromUserIdByQuantity = async (req, res) => {
             .limit(quantity)
             .exec()
         res.status(200).json({
-          success: true,
-          messages})
+            success: true,
+            messages
+        })
     } catch (e) {
         res.status(500).json({
-          success: false,
-          message: e.message
+            success: false,
+            message: e.message
         })
     }
 }
 
-export const sendMessage = async (req) => {
+export const saveMessage = async (req) => {
     const {
         senderId, receiverId, text
     } = req
