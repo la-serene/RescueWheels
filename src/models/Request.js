@@ -4,6 +4,7 @@ const requestSchema = new mongoose.Schema({
     fromUserId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
+        unique: true,
         ref: "User"
     },
     latitude: {
@@ -16,7 +17,8 @@ const requestSchema = new mongoose.Schema({
     },
     createdAt: {
         type: Date,
-        default: Date.now
+        default: Date.now,
+        expires: 3600
     }
 })
 
