@@ -25,6 +25,23 @@ export const createRequest = async (req, res) => {
     }
 }
 
+export const getRequestByUserId = async (req, res) => {
+    const fromUserId = req.params.fromUserId
+
+    try {
+        const request = await Request.findById(fromUserId).exec()
+        res.status(200).json({
+            request,
+            message: "Request found"
+        })
+    } catch (e) {
+        console.log(e.message)
+        res.status(500).json({
+            message: "Failed to get request"
+        })
+    }
+}
+
 export const deleteRequest = async (req, res) => {
     const requestId = req.params.requestId
     await Request.findByIdAndDelete(requestId).exec()
