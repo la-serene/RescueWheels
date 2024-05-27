@@ -50,7 +50,6 @@ export const getServiceByQuantity = async (req, res) => {
     if (page === undefined || page === 0 || page === 1) {
         page = 1
     }
-
     try {
         let services
         if (!fromProviderId) {
