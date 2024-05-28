@@ -8,21 +8,27 @@ import {sendMail} from "../services/send.mail.js"
 export const signUp = async (req, res) => {
 	const {email, password, ...rest} = req.body
 
-	if (await User.findOne({email: email}) !== null) {
+	const user = await User.findOne({email: email}).exec()
+	if (user == null) {
 		res.status(400).json({
 			message: "Email already exists"
 		})
-	} else {
+	}
+
+	try {
 		const salt = 10
-		const user = new User({
+		await new User({
 			email: email,
 			password: await bcrypt.hash(password, salt),
 			...rest
-		})
-		await user.save()
+		}).save()
 
 		res.status(200).json({
 			message: "Successfully create new account!"
+		})
+	} catch (e) {
+		res.status(400).json({
+			message: "Failed to create new account."
 		})
 	}
 }
@@ -30,22 +36,33 @@ export const signUp = async (req, res) => {
 export const signIn = async (req, res) => {
 	const {email, password} = req.body
 
-	const user = await User.findOne({email: email})
-
-	const isMatch = await bcrypt.compare(password, user.password)
-	if (isMatch) {
-		const token = jwt.sign({
-			id: user._id,
-			role: "user"
-		}, process.env.JWT_SECRET, {expiresIn: '720h'})
-		res.status(200).json({
-			message: "Successfully sign in!",
-			token: token,
-			id: user._id
-		})
-	} else {
+	const user = await User.findOne({email: email}).exec()
+	if (user === null) {
 		res.status(400).json({
 			message: "Invalid email or password."
+		})
+	}
+
+	try {
+		const isMatch = await bcrypt.compare(password, user.password)
+		if (isMatch) {
+			const token = jwt.sign({
+				id: user._id,
+				role: "user"
+			}, process.env.JWT_SECRET, {expiresIn: '720h'})
+			res.status(200).json({
+				message: "Successfully sign in!",
+				token: token,
+				id: user._id
+			})
+		} else {
+			res.status(400).json({
+				message: "Invalid email or password."
+			})
+		}
+	} catch (e) {
+		res.status(400).json({
+			message: "Failed to sign in."
 		})
 	}
 }
@@ -53,40 +70,46 @@ export const signIn = async (req, res) => {
 export const sendResetPasswordMail = async (req, res) => {
 	const {email} = req.body
 
-	const user = await User.findOne({email: email})
+	const user = await User.findOne({email: email}).exec()
 	if (user === null) {
 		res.status(400).json({
 			message: "User account not found."
 		})
 	} else {
-		let token = await Token.findOne({fromUserId: user._id})
-		if (token) {
-			await token.deleteOne()
+		try {
+			let token = await Token.findOne({fromUserId: user._id}).exec()
+			if (token) {
+				await token.deleteOne()
+			}
+
+			const salt = 10
+			token = crypto.randomBytes(32).toString("hex")
+			const hash = await bcrypt.hash(token, Number(salt))
+			await new Token({
+				id: user._id,
+				token: hash,
+				createdAt: Date.now(),
+			}).save()
+
+			const subject = "Reset Password"
+			const text = `Click this link to reset your password: http://localhost:3000/resetPassword?id=${user._id}&token=${token}`
+			await sendMail(email, subject, text)
+			res.status(200).json({
+				message: "Reset password link has been sent to your email."
+			})
+		} catch (e) {
+			res.status(400).json({
+				message: "Failed to send reset password link."
+			})
 		}
-
-		const salt = 10
-		token = crypto.randomBytes(32).toString("hex")
-		const hash = await bcrypt.hash(token, Number(salt))
-		await new Token({
-			id: user._id,
-			token: hash,
-			createdAt: Date.now(),
-		}).save()
-
-		const subject = "Reset Password"
-		const text = `Click this link to reset your password: http://localhost:3000/resetPassword?id=${user._id}&token=${token}`
-		await sendMail(email, subject, text)
-		res.status(200).json({
-			message: "Reset password link has been sent to your email."
-		})
 	}
 }
 
 export const validateResetToken = async (req, res) => {
-	const fromUserId = req.query.fromUserId
+	const fromUserId = req.query.id    			// hide schema attribute from user
 	const token = req.query.token
 
-	const resetToken = Token.findOne({ fromUserId })
+	const resetToken = await Token.findOne({fromUserId}).exec()
 	if (!resetToken) {
 		res.status(400).json({
 			message: "Invalid reset token.",

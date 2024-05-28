@@ -4,7 +4,6 @@ import {
     submitService,
     getServiceByServiceId,
     getServiceByQuantity,
-    getServiceFromProviderIdByQuantity,
     updateService,
     deleteService,
 } from '../controllers/serviceController.js'
