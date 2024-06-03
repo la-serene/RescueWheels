@@ -1,5 +1,6 @@
 import express from "express"
 import 'dotenv/config'
+import cors from 'cors';
 import morgan from "morgan"
 import helmet from "helmet"
 import compression from "compression"
@@ -14,6 +15,7 @@ app.use(morgan("dev"))
 app.use(helmet())
 app.use(compression())
 app.use(express.urlencoded({ extended: true }))
+app.use(cors())
 
 // init db
 import db from "./dbs/init.mongodb.js"
@@ -22,7 +24,11 @@ import db from "./dbs/init.mongodb.js"
 const httpServer = createServer(app)
 
 // init socket
-const io = new Server(httpServer)
+const io = new Server(httpServer, {
+	cors: {
+		origin: "*",
+	},
+});
 initializeSocket(io)
 
 // init routes

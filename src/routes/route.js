@@ -10,6 +10,6 @@ export default function route(app) {
   app.use("/", userRoute)
   app.use("/", serviceRoute)
   app.use("/", feedbackRoute)
-  app.use("/provider", providerRoute)
-  app.use("/message", chatRoute)
+  app.use("/", providerRoute)
+  app.use("/", chatRoute)
 }
