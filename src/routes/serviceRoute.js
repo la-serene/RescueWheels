@@ -11,7 +11,7 @@ import {
 const router = express.Router()
 const upload = multer()
 
-router.post("/submitService/:providerId", submitService)
+router.post("/submitService/:fromProviderId", submitService)
 router.get("/getServiceByServiceId/:serviceId", getServiceByServiceId)
 router.get("/getServiceByQuantity/:quantity/:fromProviderId?", getServiceByQuantity)
 router.put("/updateService/:providerId/:serviceId", updateService)

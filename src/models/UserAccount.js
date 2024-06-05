@@ -40,6 +40,21 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
+}, {
+    methods: {
+        getInsensitiveInfo: function() {
+            return {
+                "id": this._id,
+                "name": `${this.lastName} ${this.firstName}`,
+                "email": this.email,
+                "phoneNumber": this.phoneNumber,
+                "gender": this.gender,
+                "address": this.address,
+                "cover": this.cover,
+                "avatar": this.avatar
+            }
+        }
+    }
 })
 
 const User = mongoose.model("User", userSchema)

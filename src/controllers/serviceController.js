@@ -2,15 +2,15 @@ import Service from "../models/Service.js"
 import PendingService from "../models/PendingService.js"
 
 export const submitService = async (req, res) => {
-    const providerId = req.params.providerId
-    const name = req.body.name
-    const description = req.body.description
+    const fromProviderId = req.params.fromProviderId
+    const pendingServiceName = req.body.pendingServiceName
+    const pendingServiceDescription = req.body.pendingServiceDescription
 
     try {
         await new PendingService({
-            providerId: providerId,
-            name: name,
-            description: description
+            fromProviderId,
+            pendingServiceName,
+            pendingServiceDescription
         }).save()
 
         res.status(200).json({

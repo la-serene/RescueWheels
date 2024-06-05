@@ -8,10 +8,16 @@ import {sendMail} from "../services/send.mail.js"
 export const signUp = async (req, res) => {
 	const {email, password, ...rest} = req.body
 
-	const user = await User.findOne({email: email}).exec()
-	if (user == null) {
-		res.status(400).json({
-			message: "Email already exists"
+	try {
+		const user = await User.findOne({email: email}).exec()
+		if (user != null) {
+			return res.status(400).json({
+				message: "Email already exists"
+			})
+		}
+	} catch (e) {
+		return res.status(400).json({
+			message: e.message
 		})
 	}
 
@@ -36,14 +42,14 @@ export const signUp = async (req, res) => {
 export const signIn = async (req, res) => {
 	const {email, password} = req.body
 
-	const user = await User.findOne({email: email}).exec()
-	if (user === null) {
-		res.status(400).json({
-			message: "Invalid email or password."
-		})
-	}
-
 	try {
+		const user = await User.findOne({email: email}).exec()
+		if (user === null) {
+			return res.status(300).json({
+				message: "Email not found"
+			})
+		}
+
 		const isMatch = await bcrypt.compare(password, user.password)
 		if (isMatch) {
 			const token = jwt.sign({
@@ -56,13 +62,13 @@ export const signIn = async (req, res) => {
 				id: user._id
 			})
 		} else {
-			res.status(400).json({
-				message: "Invalid email or password."
+			res.status(302).json({
+				message: "Wrong password."
 			})
 		}
 	} catch (e) {
-		res.status(400).json({
-			message: "Failed to sign in."
+		res.status(303).json({
+			message: `Failed to sign in: ${e.message}`
 		})
 	}
 }

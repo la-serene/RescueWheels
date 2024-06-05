@@ -48,7 +48,7 @@ export const getPendingServiceByQuantity = async (req, res) => {
 
     try {
         let pendingServices
-        if (!fromProviderId) {
+        if (fromProviderId === undefined) {
             pendingServices = await PendingService
                 .find()
                 .skip((page - 1) * quantity)
@@ -56,7 +56,7 @@ export const getPendingServiceByQuantity = async (req, res) => {
                 .exec()
         } else {
             pendingServices = await PendingService
-                .find({ fromProviderId })
+                .findById(fromProviderId)
                 .skip((page - 1) * quantity)
                 .limit(quantity)
                 .exec()

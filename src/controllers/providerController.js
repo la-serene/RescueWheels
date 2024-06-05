@@ -12,7 +12,9 @@ export const createProvider = async (req, res) => {
             password: hashed,
             name,
             phoneNumber,
-            address
+            address,
+            latitude,
+            longitude
         }).save()
 
         res.status(200).json({
@@ -65,6 +67,8 @@ export const getProviderByQuantity = async (req, res) => {
                 .limit(quantity)
                 .exec()
         }
+
+        providers = providers.map(provider => provider.getInsensitiveInfo())
 
         res.status(200).json({
             providers,

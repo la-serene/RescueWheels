@@ -25,13 +25,31 @@ const providerSchema = new mongoose.Schema({
     latitude: {
         type: Number,
         default: 0,
-        required: true,
     },
     longitude: {
         type: Number,
         default: 0,
-        required: true,
     },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
+}, {
+    methods: {
+        getInsensitiveInfo: function() {
+            return {
+                "id": this._id,
+                "name": this.name,
+                "email": this.email,
+                "phoneNumber": this.phoneNumber,
+                "address": this.address,
+                "location": {
+                    "latitude": this.latitude,
+                    "longitude": this.longitude
+                }
+            }
+        }
+    }
 })
 
 const Provider = mongoose.model("Provider", providerSchema)
