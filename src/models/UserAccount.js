@@ -24,8 +24,8 @@ const userSchema = new mongoose.Schema({
         unique: true,
     },
     gender: {
-        type: String,
-        required: true,
+        type: Number,
+        default: 0
     },
     address: {
         type: String,

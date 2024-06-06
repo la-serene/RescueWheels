@@ -1,4 +1,4 @@
-import Provider from "../models/providerAccount.js"
+import Provider from "../models/ProviderAccount.js"
 import bcrypt from "bcrypt"
 import jwt from 'jsonwebtoken'
 
@@ -22,7 +22,8 @@ export const signIn = async (req, res) => {
 			res.status(200).json({
 				message: "Successfully sign in!",
 				token: token,
-				id: provider._id
+				id: provider._id,
+				role: "provider"
 			})
 		} else {
 			res.status(302).json({

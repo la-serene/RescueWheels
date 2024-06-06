@@ -59,7 +59,8 @@ export const signIn = async (req, res) => {
 			res.status(200).json({
 				message: "Successfully sign in!",
 				token: token,
-				id: user._id
+				id: user._id,
+				role: "user"
 			})
 		} else {
 			res.status(302).json({
